@@ -1,0 +1,41 @@
+/*
+ * File:    testPattern.ino
+ * Version: 0.0
+ * Author:  Andy Gelme (@geekscape)
+ * License: GPLv3
+ */
+
+#include "Cube4.h"
+
+Cube4 cube4;
+
+void setup(void) {
+  Serial.begin(38400);
+
+  cube4.initialise();  // initialise the cube LED scanning and display system (uses Timer 1 and interrupt to scan)
+
+#if defined(ARDUINO) && ARDUINO >= 101
+//while (Serial != false) ; // Wait for Leonardo USB
+#endif
+
+  Serial.println("Cube4: test pattern");
+  Serial.println("~~~~~~~~~~~~~~~~~~~");
+}
+
+extern long cube4init;
+extern long timePeriod;
+
+void loop(void) {
+  Serial.println(cube4init, HEX);
+  Serial.println();
+  Serial.println(TCCR1A, HEX);  // Was 1       Should be      0
+  Serial.println(TCCR1B, HEX);  // Was 3       Should be   0x11
+  Serial.println(ICR1,   HEX);  // Was 0x30D4  Should be 0x15E0
+  Serial.println(SREG,   HEX);  // Was 0x82    Should be   0x82
+  Serial.println(TIMSK1, HEX);  // Was 1       Should be      1
+  Serial.println();
+  Serial.print(timePeriod);
+  Serial.println(" microseconds");
+  Serial.println("---------");
+  delay(5000);
+}
