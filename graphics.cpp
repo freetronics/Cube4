@@ -8,6 +8,8 @@
  *
  * ToDo
  * ~~~~
+ * - Check all parameter bounds !
+ *
  * - Implement pattern scripting over serial line.
  * - Color gamma correction map for each LED intensity in Flash memory.
  *   - See post #37 http://www.microchip.com/forums/m479196-p2.aspx
