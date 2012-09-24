@@ -26,6 +26,14 @@
 static const byte CUBE_SIZE = 4;
 static const long TIMER1_PERIOD = 700;  // microseconds
 
+// Analog pins ...
+
+static const byte PIN_ACCELERATION_X = 0;
+static const byte PIN_ACCELERATION_Y = 1;
+static const byte PIN_ACCELERATION_Z = 2;
+
+// Digital pins ...
+
 // Chip: 74154.  RGB LED plane Z0 to Z3 high-side drivers.
 
 static const byte PIN_LED_EN =  7;  // Enable is LOW
