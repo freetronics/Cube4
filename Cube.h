@@ -24,7 +24,7 @@
 #define RESOLUTION 65536
 
 static const byte CUBE_SIZE = 4;
-static const long TIMER1_PERIOD = 700;  // microseconds
+static const long TIMER1_PERIOD = 500;  // microseconds = 2 Khz per plane
 
 // Analog pins ...
 

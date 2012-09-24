@@ -1,16 +1,14 @@
 /*
  * File:    Cube.cpp
  * Version: 0.0
- * Author:  Andy Gelme (@geekscape)
+ * Author:  Andy Gelme (@geekscape) and Marc Alexander (@mtronic)
  * License: GPLv3
  *
  * Low-level Cube drivers for 74154 and MY9262.
  *
  * ToDo
  * ~~~~
- * - Aim for 2 to 3 KHz scan rate rate (per color plane).
- * - loadColorPlaneZ() for 74154 set all 4 pins at once, using Port B directly.
- * - Rewrite SPI data transfer allowing pattern processing during data transfer.
+ * - Clean-up new loadColorPlaneZ() implementation.
  * - Test current gain control.
  */
 
@@ -29,8 +27,8 @@ void loadColorPlaneZ(byte color, byte planeZ);
 //long cubeLastTime = 0;
 //long cubeTimer1Period = 0;
 
-ISR(TIMER1_OVF_vect) {                             // 656 microseconds
-//digitalWrite(7, digitalRead(7) ^ 1);             // Diagnosis via oscilloscope
+ISR(TIMER1_OVF_vect) {                            // 116 microseconds
+//digitalWrite(7, digitalRead(7) ^ 1);            // Diagnosis via oscilloscope
 
   if (++ currentColor > COLOR_PLANE_BLUE) {
     currentColor  = COLOR_PLANE_RED;
@@ -48,7 +46,7 @@ Cube::Cube() {
 }
 
 void Cube::begin() {
-//pinMode(7, OUTPUT);                              // Diagnosis via oscilloscope
+//pinMode(7, OUTPUT);                             // Diagnosis via oscilloscope
 
 // Assume these pins are all in consecutive order
   for (byte pin = PIN_LED_EN;  pin <= PIN_LED_LAT;  pin ++) {
@@ -115,10 +113,10 @@ void Cube::my9262WriteCommand(
   digitalWrite(PIN_LED_LAT, LOW);
 
   for (byte b = 0;  b < 16;  b ++) {
-    digitalWrite(MOSI, (command & 0x8000) == 0x8000);               // MSB first
+    digitalWrite(MOSI, (command & 0x8000) == 0x8000);              // MSB first
     command <<= 1;
 
-    if (b == 6) digitalWrite(PIN_LED_LAT, HIGH);   // MY9262 Write Command latch
+    if (b == 6) digitalWrite(PIN_LED_LAT, HIGH);  // MY9262 Write Command latch
     digitalWrite(SCK, HIGH);
     digitalWrite(SCK, LOW);
   }
@@ -130,52 +128,57 @@ void loadColorPlaneZ(
   byte color,
   byte planeZ) {
 
-  SPI.begin();
-//SPI.setBitOrder(MSBFIRST);
-  SPI.setClockDivider(SPI_CLOCK_DIV2);
+  SPCR  = ((1 << SPE) | (1 << MSTR));  // TODO: Set MSTR in initializeTimer1()
+  SPSR |= (1 << SPI2X);                // TODO: Move to initializeTimer1()
 
   for (byte w = 0;  w < 15;  w ++) {
-    byte value = led[w % CUBE_SIZE][w >> 2][planeZ].color[color];
-
-    SPI.transfer(value);
+    SPI.transfer(led[w % CUBE_SIZE][w >> 2][planeZ].color[color]);
     SPI.transfer(0x00);
-
-    digitalWrite(PIN_LED_LAT, HIGH);  // MY9262 Data latch
-    digitalWrite(SCK, HIGH);
-    digitalWrite(SCK, LOW);
-    digitalWrite(PIN_LED_LAT, LOW);
+                           // MY9262 Data latch
+    PORTD |=  (1 << 6);    // digitalWrite(PIN_LED_LAT, HIGH);
+    PORTB |=  (1 << 1);    // digitalWrite(SCK, HIGH);
+    PORTB &= ~(1 << 1);    // digitalWrite(SCK, LOW);
+    PORTD &= ~(1 << 6);    // digitalWrite(PIN_LED_LAT, LOW);
   }
 
-  SPI.end();
+  SPCR &= ~(1 << SPE);     // SPI.end();
 
   byte value = led[3][3][planeZ].color[color];
 
   for (byte b = 0;  b < 8;  b ++) {  // LSB first
-    digitalWrite(MOSI, (value & 0x80) == 0x80);
+    if (value & 0x80) {    // digitalWrite(MOSI, (value & 0x80) == 0x80);
+      PORTB |=  (1 << 2);
+    }
+    else {
+      PORTB &= ~(1 << 2);
+    }
+
     value <<= 1;
-    digitalWrite(SCK, HIGH);
-    digitalWrite(SCK, LOW);
+    PORTB |=  (1 << 1);    // digitalWrite(SCK, HIGH);
+    PORTB &= ~(1 << 1);    // digitalWrite(SCK, LOW);
   }
 
-  digitalWrite(MOSI, LOW);
+  PORTB &= ~(1 << 2);      // digitalWrite(MOSI, LOW);
 
   for (byte b = 8;  b < 16;  b ++) {
-    if (b == 14) digitalWrite(PIN_LED_LAT, HIGH);  // MY9262 Global latch
-    digitalWrite(SCK, HIGH);
-    digitalWrite(SCK, LOW);
+    if (b == 14) {         // MY9262 Global latch
+      PORTD |=  (1 << 6);  // digitalWrite(PIN_LED_LAT, HIGH);
+    }
+
+    PORTB |=  (1 << 1);    // digitalWrite(SCK, HIGH);
+    PORTB &= ~(1 << 1);    // digitalWrite(SCK, LOW);
   }
 
-  digitalWrite(PIN_LED_EN, HIGH);  // Disable 74154
-  digitalWrite(PIN_LED_LAT, LOW);  // MY9262 latch complete
+                           // Disable 7154, MY9262 latch complete
+  PORTE |=  (1 << 6);      // digitalWrite(PIN_LED_EN, HIGH);
+  PORTD &= ~(1 << 6);      // digitalWrite(PIN_LED_LAT, LOW);
 
   byte colorPlaneZSelect = color + (planeZ * 3);
 
-  // Assume these pins are all in consecutive order
-  for (byte pin = PIN_LED_A0;  pin <= PIN_LED_A3;  pin ++) {
-    digitalWrite(pin, colorPlaneZSelect & 1);
-    colorPlaneZSelect >>= 1;
-  }
+  PORTB &= B00001111;      // Assume these pins are all in consecutive order
+  PORTB |= (colorPlaneZSelect << 4);
 
-  digitalWrite(PIN_LED_EN, LOW);   // Enable 74154
+// Enable 74154
+  PORTE &= ~(1 << 6);      // digitalWrite(PIN_LED_EN, LOW);
 }
 #endif
