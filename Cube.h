@@ -62,7 +62,7 @@ class Cube {
 
   public:
     Cube();
-    void begin(byte serialPort = -1, long baudRate = 38400);
+    void begin(byte serialPort = -1, long baudRate = 115200);
     void all(rgb_t rgb);
     void set(byte x, byte y, byte z, rgb_t rgb);
 };

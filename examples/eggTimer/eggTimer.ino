@@ -20,7 +20,7 @@
 Cube cube;
 
 void setup(void) {
-  Serial.begin(38400);
+  Serial.begin(115200);
 
 #if defined(ARDUINO) && ARDUINO >= 101
 //while (Serial == false) ;                 // Wait for Leonardo USB serial port

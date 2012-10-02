@@ -20,7 +20,7 @@ void setup(void) {
   while (Serial == false) ;                 // Wait for Leonardo USB serial port
 #endif
 
-  cube.begin(0, 38400);                     // Port: Serial, Baudrate: 38400
+  cube.begin(0, 115200);                    // Port: Serial, Baudrate: 115200
 }
 
 void loop(void) {

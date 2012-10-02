@@ -9,7 +9,7 @@
 #define SERIAL_h
 
 static const unsigned long MESSAGE_TIMEOUT = 5000;  // milliseconds
-static const unsigned long SERIAL_HANDLER_PERIOD = 10;  // milliseconds
+static const unsigned long SERIAL_HANDLER_PERIOD = 5;  // milliseconds
 
 static const byte NUL =   0x00;  // Null character
 static const byte STX =   0x02;  // Start of TeXt
