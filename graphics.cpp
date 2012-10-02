@@ -4,7 +4,7 @@
  * Author:  Andy Gelme (@geekscape)
  * License: GPLv3
  *
- * Higher-level Cube graphics functions.
+ * Higher-level Cube graphics.
  *
  * ToDo
  * ~~~~

@@ -20,6 +20,7 @@
 #endif
 
 #include "color.h"
+#include "engine.h"
 
 #define RESOLUTION 65536
 
@@ -53,18 +54,25 @@ static const byte COLOR_PLANE_BLUE  = 2;
 class Cube {
   private:
     rgb_t currentColor;
-    void  fillPlaneZ(byte z, rgb_t rgb);
-    void  initializeTimer1(long period);
-    void  my9262WriteCommand(unsigned int command);
+
+    void fillPlaneZ(byte z, rgb_t rgb);
+    void initializeTimer1(long period);
+    void my9262WriteCommand(unsigned int command);
+    void serialBegin(byte serialPort, long baudRate);
 
   public:
     Cube();
-    void  begin();
-    void  all(rgb_t rgb);
-    void  set(byte x, byte y, byte z, rgb_t rgb);
+    void begin(byte serialPort = -1, long baudRate = 38400);
+    void all(rgb_t rgb);
+    void set(byte x, byte y, byte z, rgb_t rgb);
 };
+
+//extern long cubeTimer1Period;
 
 extern rgb_t led[CUBE_SIZE][CUBE_SIZE][CUBE_SIZE];
 
-//extern long cubeTimer1Period;
+extern Stream *serial;
+
+extern byte parser(char *message, byte messageLength, bytecode_t *bytecode);
+extern void serialHandler(void);
 #endif

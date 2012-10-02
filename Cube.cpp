@@ -40,12 +40,19 @@ ISR(TIMER1_OVF_vect) {                            // 116 microseconds
 //long thisTime    = micros();
 //cubeTimer1Period = thisTime - cubeLastTime;
 //cubeLastTime     = thisTime;
+
+  serialHandler();
 }
 
 Cube::Cube() {
 }
 
-void Cube::begin() {
+void Cube::begin(
+  byte serialPort,
+  long baudRate) {
+
+  serialBegin(serialPort, baudRate);
+
 //pinMode(7, OUTPUT);                             // Diagnosis via oscilloscope
 
 // Assume these pins are all in consecutive order
