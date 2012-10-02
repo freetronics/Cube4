@@ -17,8 +17,8 @@ typedef struct bytecode_s {
     } go;
 
     struct {
-      rgb_t colourFrom;
-      rgb_t colourTo;
+      rgb_t colorFrom;
+      rgb_t colorTo;
       byte period;
     } lit;
 

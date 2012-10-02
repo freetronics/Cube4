@@ -21,6 +21,13 @@
 byte parseCommand(
   char *message, byte length, byte *position, command_t **command
 );
+
+byte parseRGB(char *message, byte length, byte *position, rgb_t *rgb);
+
+byte checkForHexadecimal(
+  char *message, byte length, byte *position, byte *digit
+);
+
 void skipToken(char *message, byte length, byte *position);
 void skipWhitespace(char *message, byte length, byte *position);
 boolean stringCompare(char *source, char *target);
@@ -75,6 +82,25 @@ byte parseCommand(
   return(errorCode);
 }
 
+byte parseCommandAll(
+  char       *message,
+  byte        length,
+  byte       *position,
+  command_t  *command,
+  bytecode_t *bytecode) {
+
+  byte errorCode = 0;
+  bytecode->executer = command->executer;
+
+  skipWhitespace(message, length, position);
+
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+
+  if (errorCode == 0) cubeAll(bytecode->u.lit.colorFrom);
+
+  return(errorCode);
+};
+
 byte parseCommandHelp(
   char       *message,
   byte        length,
@@ -85,10 +111,84 @@ byte parseCommandHelp(
   byte errorCode = 0;
   bytecode->executer = command->executer;
 
-  if (serial) serial->println("No 'help' available yet");
+  if (serial) {
+    serial->println("all rrggbb;");
+  }
 
   return(errorCode);
 };
+
+byte parseRGB(
+  char  *message,
+  byte   length,
+  byte  *position,
+  rgb_t *rgb) {
+
+  byte digit;
+  byte number;
+  byte errorCode = 7;
+
+  if (checkForHexadecimal(message, length, position, & digit)) {
+    number = digit;
+    (*position) ++;
+
+    if (checkForHexadecimal(message, length, position, & digit)) {
+      rgb->color[0] = number * 16 + digit;
+      (*position) ++;
+
+      if (checkForHexadecimal(message, length, position, & digit)) {
+        number = digit;
+        (*position) ++;
+
+        if (checkForHexadecimal(message, length, position, & digit)) {
+          rgb->color[1] = number * 16 + digit;
+          (*position) ++;
+
+          if (checkForHexadecimal(message, length, position, & digit)) {
+            number = digit;
+            (*position) ++;
+
+            if (checkForHexadecimal(message, length, position, & digit)) {
+              rgb->color[2] = number * 16 + digit;
+              (*position) ++;
+              errorCode = 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return(errorCode);
+};
+
+byte checkForHexadecimal(
+  char *message,
+  byte  length,
+  byte *position,
+  byte *digit) {
+
+  byte match = 0;
+
+  if (*position < length) {
+    if (message[*position] >= '0'  &&  message[*position] <= '9') {
+      *digit = message[*position] - '0';
+      match = 1;
+    }
+
+    if (message[*position] >= 'A'  &&  message[*position] <= 'F') {
+      *digit = message[*position] - 'A' + 10;
+      match = 1;
+    }
+
+    if (message[*position] >= 'a'  &&  message[*position] <= 'f') {
+      *digit = message[*position] - 'a' + 10;
+      match = 1;
+    }
+  }
+
+  return(match);
+}
 
 void skipToken(
   char *message,

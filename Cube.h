@@ -73,6 +73,9 @@ extern rgb_t led[CUBE_SIZE][CUBE_SIZE][CUBE_SIZE];
 
 extern Stream *serial;
 
+extern void cubeAll(rgb_t rgb);
+extern void cubeFillPlaneZ(byte z, rgb_t rgb);
+extern void cubeSet( byte x, byte y, byte z, rgb_t rgb);
 extern byte parser(char *message, byte messageLength, bytecode_t *bytecode);
 extern void serialHandler(void);
 #endif

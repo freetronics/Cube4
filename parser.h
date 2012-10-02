@@ -24,9 +24,16 @@ typedef struct command_s {
 }
   command_t;
 
-byte parseCommandHelp(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandAll(
+  char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode
+);
+
+byte parseCommandHelp(
+  char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode
+);
 
 command_t commands[] = {
+  "all",  parseCommandAll,  executeNop,
   "help", parseCommandHelp, executeNop
 };
 

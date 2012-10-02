@@ -26,21 +26,43 @@
 void Cube::all(
   rgb_t rgb) {
 
-  for (byte z = 0;  z < CUBE_SIZE;  z ++) fillPlaneZ(z, rgb);
+  cubeAll(rgb);
+}
+
+void cubeAll(
+  rgb_t rgb) {
+
+  for (byte z = 0;  z < CUBE_SIZE;  z ++) cubeFillPlaneZ(z, rgb);
 }
 
 void Cube::fillPlaneZ(
   byte  z,
   rgb_t rgb) {
 
+  cubeFillPlaneZ(z, rgb);
+}
+
+void cubeFillPlaneZ(
+  byte  z,
+  rgb_t rgb) {
+
   for (byte y = 0;  y < CUBE_SIZE;  y++) {
     for (byte x = 0;  x < CUBE_SIZE;  x++) {
-      set(x, y, z, rgb);
+      cubeSet(x, y, z, rgb);
     }
   }
 }
 
 void Cube::set(
+  byte  x,
+  byte  y,
+  byte  z,
+  rgb_t rgb) {
+
+  cubeSet(x, y, z, rgb);
+}
+
+void cubeSet(
   byte  x,
   byte  y,
   byte  z,
