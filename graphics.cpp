@@ -22,6 +22,7 @@
 #define CUBE_cpp
 
 #include "Cube.h"
+#include "graphics.h"
 
 void Cube::all(
   rgb_t rgb) {
@@ -32,7 +33,7 @@ void Cube::all(
 void cubeAll(
   rgb_t rgb) {
 
-  for (byte z = 0;  z < CUBE_SIZE;  z ++) cubeFillPlaneZ(z, rgb);
+  for (byte z = 0;  z < CUBE_SIZE;  z++) cubeFillPlaneZ(z, rgb);
 }
 
 void Cube::fillPlaneZ(
@@ -60,6 +61,9 @@ void Cube::set(
   rgb_t rgb) {
 
   cubeSet(x, y, z, rgb);
+  cursorX = x;
+  cursorY = y;
+  cursorZ = z;
 }
 
 void cubeSet(
@@ -82,7 +86,23 @@ void Cube::next(
 void cubeNext(
   rgb_t rgb) {
 
-  //FIXME
+  cursorX++;
+  if(cursorX > CUBE_SIZE - 1)
+  {
+    cursorX = 0;
+    cursorY++;
+    if(cursorY > CUBE_SIZE - 1)
+    {
+      cursorY = 0;
+      cursorZ++;
+      if(cursorZ > CUBE_SIZE - 1)
+      {
+        cursorZ = 0;
+      }
+    }
+  }
+  
+  cubeSet(cursorX, cursorY, cursorZ, rgb);
 }
 
 void Cube::line(
