@@ -168,7 +168,38 @@ void cubeSetplane(
   byte position,
   rgb_t rgb) {
 
-  //FIXME
+  if( axis == X)
+  {
+    byte y = 0;
+    byte z = 0;
+    for (byte z = 0;  z < CUBE_SIZE;  z++) {
+      for (byte y = 0;  y < CUBE_SIZE;  y++) {
+        cubeSet(position, y, z, rgb);
+      }
+    }
+  }
+
+  if( axis == Y)
+  {
+    byte x = 0;
+    byte z = 0;
+    for (byte z = 0;  z < CUBE_SIZE;  z++) {
+      for (byte x = 0;  x < CUBE_SIZE;  x++) {
+        cubeSet(x, position, z, rgb);
+      }
+    }
+  }
+
+  if( axis == Z)
+  {
+    byte x = 0;
+    byte y = 0;
+    for (byte y = 0;  y < CUBE_SIZE;  y++) {
+      for (byte x = 0;  x < CUBE_SIZE;  x++) {
+        cubeSet(x, y, position, rgb);
+      }
+    }
+  }
 }
 
 
