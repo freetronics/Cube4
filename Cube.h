@@ -65,6 +65,12 @@ class Cube {
     void begin(byte serialPort = -1, long baudRate = 115200);
     void all(rgb_t rgb);
     void set(byte x, byte y, byte z, rgb_t rgb);
+    void next(rgb_t rgb);
+    void line(byte x1, byte y1, byte z1, byte x2, byte y2, byte z2, rgb_t rgb);
+    void move(byte axis, byte position, byte distance);
+    void shift(byte axis, byte direction);
+    void copy(byte axis, byte position, byte distance);
+    void setplane(byte axis, byte position, rgb_t rgb);
 };
 
 //extern long cubeTimer1Period;
@@ -76,6 +82,12 @@ extern Stream *serial;
 extern void cubeAll(rgb_t rgb);
 extern void cubeFillPlaneZ(byte z, rgb_t rgb);
 extern void cubeSet( byte x, byte y, byte z, rgb_t rgb);
+extern void cubeNext(rgb_t rgb);
+extern void cubeLine(byte x1, byte y1, byte z1, byte x2, byte y2, byte z2, rgb_t rgb);
+extern void cubeMove(byte axis, byte position, byte distance);
+extern void cubeShift(byte axis, byte direction);
+extern void cubeCopy(byte axis, byte position, byte distance);
+extern void cubeSetplane(byte axis, byte position, rgb_t rgb);
 extern byte parser(char *message, byte messageLength, bytecode_t *bytecode);
 extern void serialHandler(void);
 #endif

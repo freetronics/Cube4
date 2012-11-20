@@ -72,4 +72,104 @@ void cubeSet(
   led[x][y][z].color[COLOR_PLANE_GREEN] = rgb.color[COLOR_PLANE_GREEN];
   led[x][y][z].color[COLOR_PLANE_BLUE]  = rgb.color[COLOR_PLANE_BLUE];
 }
+
+void Cube::next(
+  rgb_t rgb) {
+
+  cubeNext(rgb);
+}
+
+void cubeNext(
+  rgb_t rgb) {
+
+  //FIXME
+}
+
+void Cube::line(
+  byte x1,
+  byte y1,
+  byte z1,
+  byte x2,
+  byte y2,
+  byte z2,
+  rgb_t rgb) {
+
+  cubeLine(x1, y1, z1, x2, y2, z2, rgb);
+}
+
+void cubeLine(
+  byte x1,
+  byte y1,
+  byte z1,
+  byte x2,
+  byte y2,
+  byte z2,
+  rgb_t rgb) {
+
+  //FIXME
+}
+
+void Cube::move(
+  byte axis,
+  byte position,
+  byte distance) {
+
+  cubeMove(axis, position, distance);
+}
+
+void cubeMove(
+  byte axis,
+  byte position,
+  byte distance) {
+
+  //FIXME
+}
+
+void Cube::shift(
+  byte axis,
+  byte direction) {
+
+  cubeShift(axis, direction);
+}
+
+void cubeShift(
+  byte axis,
+  byte direction) {
+
+  //FIXME
+}
+
+void Cube::copy(
+  byte axis,
+  byte position,
+  byte distance) {
+
+  cubeCopy(axis, position, distance);
+}
+
+void cubeCopy(
+  byte axis,
+  byte position,
+  byte distance) {
+
+  //FIXME
+}
+
+void Cube::setplane(
+  byte axis,
+  byte position,
+  rgb_t rgb) {
+
+  cubeSetplane(axis, position, rgb);
+}
+
+void cubeSetplane(
+  byte axis,
+  byte position,
+  rgb_t rgb) {
+
+  //FIXME
+}
+
+
 #endif
