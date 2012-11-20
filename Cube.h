@@ -51,6 +51,10 @@ static const byte COLOR_PLANE_RED   = 0;
 static const byte COLOR_PLANE_GREEN = 1;
 static const byte COLOR_PLANE_BLUE  = 2;
 
+static const byte X = 0;
+static const byte Y = 1;
+static const byte Z = 2;
+
 class Cube {
   private:
     rgb_t currentColor;
