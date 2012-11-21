@@ -61,9 +61,6 @@ void Cube::set(
   rgb_t rgb) {
 
   cubeSet(x, y, z, rgb);
-  cursorX = x;
-  cursorY = y;
-  cursorZ = z;
 }
 
 void cubeSet(
@@ -75,6 +72,10 @@ void cubeSet(
   led[x][y][z].color[COLOR_PLANE_RED]   = rgb.color[COLOR_PLANE_RED];
   led[x][y][z].color[COLOR_PLANE_GREEN] = rgb.color[COLOR_PLANE_GREEN];
   led[x][y][z].color[COLOR_PLANE_BLUE]  = rgb.color[COLOR_PLANE_BLUE];
+
+  cursorX = x;
+  cursorY = y;
+  cursorZ = z;
 }
 
 void Cube::next(
