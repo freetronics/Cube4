@@ -213,9 +213,11 @@ byte parseCommandHelp(
     serial->println("next <colour>;                              (eg: 'next BLUE;', or 'next 0000ff;')");
     serial->println("setplane <axis> <offset> <colour>;          (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 00ff00;')");
     serial->println("copyplane <axis> <from offset> <to offset>; (eg: 'copyplane X 2 1;')");
-    serial->println("line <location1> <location2> <colour>;      (eg: 'line 000 333 WHITE;', or 'line 000 333 ffffff;') INCOMPLETE");
-    serial->println("move <axis> <offset> <distance>;            (eg: 'move Z 3;', or 'move X -1;')                     INCOMPLETE");
-    serial->println("shift <axis> <direction>;                   (eg: 'shift X 1;', or 'shift Y -1;')                   INCOMPLETE");
+    serial->println("  Supported colour aliases:");
+    serial->println("BLACK BLUE GREEN PURPLE RED WHITE YELLOW");
+    //serial->println("line <location1> <location2> <colour>;      (eg: 'line 000 333 WHITE;', or 'line 000 333 ffffff;') INCOMPLETE");
+    //serial->println("move <axis> <offset> <distance>;            (eg: 'move Z 3;', or 'move X -1;')                     INCOMPLETE");
+    //serial->println("shift <axis> <direction>;                   (eg: 'shift X 1;', or 'shift Y -1;')                   INCOMPLETE");
     serial->println("  Please see www.freetronics.com/cube for more information");
   }
 
