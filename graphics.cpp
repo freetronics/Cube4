@@ -159,15 +159,15 @@ void cubeShift(
   //FIXME
 }
 
-void Cube::copy(
+void Cube::copyplane(
   byte axis,
   byte position,
   byte distance) {
 
-  cubeCopy(axis, position, distance);
+  cubeCopyplane(axis, position, distance);
 }
 
-void cubeCopy(
+void cubeCopyplane(
   byte axis,
   byte position,
   byte distance) {

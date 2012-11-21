@@ -75,7 +75,7 @@ class Cube {
     void line(byte x1, byte y1, byte z1, byte x2, byte y2, byte z2, rgb_t rgb);
     void move(byte axis, byte position, byte distance);
     void shift(byte axis, byte direction);
-    void copy(byte axis, byte position, byte distance);
+    void copyplane(byte axis, byte position, byte distance);
     void setplane(byte axis, byte position, rgb_t rgb);
 };
 
@@ -92,7 +92,7 @@ extern void cubeNext(rgb_t rgb);
 extern void cubeLine(byte x1, byte y1, byte z1, byte x2, byte y2, byte z2, rgb_t rgb);
 extern void cubeMove(byte axis, byte position, byte distance);
 extern void cubeShift(byte axis, byte direction);
-extern void cubeCopy(byte axis, byte position, byte distance);
+extern void cubeCopyplane(byte axis, byte position, byte distance);
 extern void cubeSetplane(byte axis, byte position, rgb_t rgb);
 extern byte parser(char *message, byte messageLength, bytecode_t *bytecode);
 extern void serialHandler(void);
