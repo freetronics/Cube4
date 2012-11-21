@@ -10,6 +10,7 @@
  * ~~~~
  * - Make parser understand colour aliases, such as RED
  * - Set global cursor position when writing to a location
+ * - Decide how to represent the hidden location. Using -1 for now
  */
 
 #ifndef CUBE_cpp
@@ -27,9 +28,9 @@ byte parseRGB(char *message, byte length, byte *position, rgb_t *rgb);
 
 byte parsePosition(char *message, byte length, byte *position, byte *positionX, byte *positionY, byte *positionZ);
 
-byte checkForHexadecimal(
-  char *message, byte length, byte *position, byte *digit
-);
+byte checkForHexadecimal(char *message, byte length, byte *position, byte *digit);
+
+byte checkForPosition(char *message, byte length, byte *position, byte *digit);
 
 void skipToken(char *message, byte length, byte *position);
 void skipWhitespace(char *message, byte length, byte *position);
@@ -212,15 +213,15 @@ byte parsePosition(
   byte number;
   byte errorCode = 6;
 
-  if (checkForHexadecimal(message, length, position, & digit)) {
+  if (checkForPosition(message, length, position, & digit)) {
     *positionX = digit;
     (*position) ++;
 
-    if (checkForHexadecimal(message, length, position, & digit)) {
+    if (checkForPosition(message, length, position, & digit)) {
       *positionY = digit;
       (*position) ++;
 
-      if (checkForHexadecimal(message, length, position, & digit)) {
+      if (checkForPosition(message, length, position, & digit)) {
         *positionZ = digit;
         (*position) ++;
         errorCode = 0;
@@ -252,6 +253,29 @@ byte checkForHexadecimal(
 
     if (message[*position] >= 'a'  &&  message[*position] <= 'f') {
       *digit = message[*position] - 'a' + 10;
+      match = 1;
+    }
+  }
+
+  return(match);
+}
+
+byte checkForPosition(
+  char *message,
+  byte  length,
+  byte *position,
+  byte *digit) {
+
+  byte match = 0;
+
+  if (*position < length) {
+    if (message[*position] >= '0'  &&  message[*position] <= '9') {
+      *digit = message[*position] - '0';
+      match = 1;
+    }
+
+    if (message[*position] == 'H'  ||  message[*position] == 'h') {
+      *digit = -1;
       match = 1;
     }
   }
