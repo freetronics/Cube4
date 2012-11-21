@@ -129,6 +129,24 @@ byte parseCommandSet(
   return(errorCode);
 };
 
+byte parseCommandNext(
+  char       *message,
+  byte        length,
+  byte       *position,
+  command_t  *command,
+  bytecode_t *bytecode) {
+
+  byte errorCode = 0;
+  bytecode->executer = command->executer;
+
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+
+  if (errorCode == 0) cubeNext(bytecode->u.lit.colorFrom);
+
+  return(errorCode);
+};
+
 byte parseCommandCopyplane(
   char       *message,
   byte        length,
@@ -192,12 +210,12 @@ byte parseCommandHelp(
     serial->println("  Available commands:");
     serial->println("all <colour>;                               (eg: 'all RED;', or 'all ff0000;')");
     serial->println("set <location> <colour>;                    (eg: 'set 112 GREEN;', or 'set 112 00ff00;')");
-    serial->println("next <colour>;                              (eg: 'next BLUE;', or 'next 0000ff;')                  (incomplete)");
-    serial->println("line <location1> <location2> <colour>;      (eg: 'line 000 333 WHITE;', or 'line 000 333 ffffff;') (incomplete)");
-    serial->println("move <axis> <offset> <distance>;            (eg: 'move Z 3;', or 'move X -1;')                     (incomplete)");
-    serial->println("shift <axis> <direction>;                   (eg: 'shift X 1;', or 'shift Y -1;')                   (incomplete)");
+    serial->println("next <colour>;                              (eg: 'next BLUE;', or 'next 0000ff;')");
+    serial->println("setplane <axis> <offset> <colour>;          (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 00ff00;')");
     serial->println("copyplane <axis> <from offset> <to offset>; (eg: 'copyplane X 2 1;')");
-    serial->println("setplane <axis> <offset> <colour>;          (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 GREEN;')");
+    serial->println("line <location1> <location2> <colour>;      (eg: 'line 000 333 WHITE;', or 'line 000 333 ffffff;') INCOMPLETE");
+    serial->println("move <axis> <offset> <distance>;            (eg: 'move Z 3;', or 'move X -1;')                     INCOMPLETE");
+    serial->println("shift <axis> <direction>;                   (eg: 'shift X 1;', or 'shift Y -1;')                   INCOMPLETE");
     serial->println("  Please see www.freetronics.com/cube for more information");
   }
 
@@ -213,6 +231,30 @@ byte parseRGB(
   byte digit;
   byte number;
   byte errorCode = 7;
+
+  // Temporary test of colour alias detection. Nasty, replace with a generalised parser
+  if (message[*position] == 'R' || message[*position] == 'r')
+  {
+    *rgb = RED;
+    (*position) ++;
+    errorCode = 0;
+    return(errorCode);
+  }
+  if (message[*position] == 'G' || message[*position] == 'g')
+  {
+    *rgb = GREEN;
+    (*position) ++;
+    errorCode = 0;
+    return(errorCode);
+  }
+  if (message[*position] == 'B' || message[*position] == 'b')
+  {
+    *rgb = BLUE;
+    (*position) ++;
+    errorCode = 0;
+    return(errorCode);
+  }
+
 
   if (checkForHexadecimal(message, length, position, & digit)) {
     number = digit;

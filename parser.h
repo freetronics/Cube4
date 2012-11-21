@@ -26,6 +26,7 @@ typedef struct command_s {
 
 byte parseCommandAll(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSet(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandNext(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSetplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandCopyplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandHelp(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
@@ -33,6 +34,7 @@ byte parseCommandHelp(char *message, byte length, byte *position, command_t *com
 command_t commands[] = {
   "all",       parseCommandAll,       executeNop,
   "set",       parseCommandSet,       executeNop,
+  "next",      parseCommandNext,      executeNop,
   "setplane",  parseCommandSetplane,  executeNop,
   "copyplane", parseCommandCopyplane, executeNop,
   "help",      parseCommandHelp,      executeNop
