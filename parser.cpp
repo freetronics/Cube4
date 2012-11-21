@@ -233,24 +233,85 @@ byte parseRGB(
   byte errorCode = 7;
 
   // Temporary test of colour alias detection. Nasty, replace with a generalised parser
-  if (message[*position] == 'R' || message[*position] == 'r')
+  if ((message[*position] == 'B' || message[*position] == 'b')
+      && (message[*position + 1] == 'L' || message[*position + 1] == 'l')
+      && (message[*position + 2] == 'A' || message[*position + 2] == 'a')
+      && (message[*position + 3] == 'C' || message[*position + 3] == 'c')
+      && (message[*position + 4] == 'K' || message[*position + 4] == 'k'))
   {
-    *rgb = RED;
-    (*position) ++;
+    *rgb = BLACK;
+    (*position) += 5;
     errorCode = 0;
     return(errorCode);
   }
-  if (message[*position] == 'G' || message[*position] == 'g')
-  {
-    *rgb = GREEN;
-    (*position) ++;
-    errorCode = 0;
-    return(errorCode);
-  }
-  if (message[*position] == 'B' || message[*position] == 'b')
+
+  if ((message[*position] == 'B' || message[*position] == 'b')
+      && (message[*position + 1] == 'L' || message[*position + 1] == 'l')
+      && (message[*position + 2] == 'U' || message[*position + 2] == 'u')
+      && (message[*position + 3] == 'E' || message[*position + 3] == 'e'))
   {
     *rgb = BLUE;
-    (*position) ++;
+    (*position) +=4;
+    errorCode = 0;
+    return(errorCode);
+  }
+
+  if ((message[*position] == 'G' || message[*position] == 'g')
+      && (message[*position + 1] == 'R' || message[*position + 1] == 'r')
+      && (message[*position + 2] == 'E' || message[*position + 2] == 'e')
+      && (message[*position + 3] == 'E' || message[*position + 3] == 'e')
+      && (message[*position + 4] == 'N' || message[*position + 4] == 'n'))
+  {
+    *rgb = GREEN;
+    (*position) += 5;
+    errorCode = 0;
+    return(errorCode);
+  }
+
+  if ((message[*position] == 'P' || message[*position] == 'p')
+      && (message[*position + 1] == 'U' || message[*position + 1] == 'u')
+      && (message[*position + 2] == 'R' || message[*position + 2] == 'r')
+      && (message[*position + 3] == 'P' || message[*position + 3] == 'p')
+      && (message[*position + 4] == 'L' || message[*position + 4] == 'l')
+      && (message[*position + 5] == 'E' || message[*position + 5] == 'e'))
+  {
+    *rgb = PURPLE;
+    (*position) += 6;
+    errorCode = 0;
+    return(errorCode);
+  }
+
+  if ((message[*position] == 'R' || message[*position] == 'r')
+      && (message[*position + 1] == 'E' || message[*position + 1] == 'e')
+      && (message[*position + 2] == 'D' || message[*position + 2] == 'd'))
+  {
+    *rgb = RED;
+    (*position) += 3;;
+    errorCode = 0;
+    return(errorCode);
+  }
+
+  if ((message[*position] == 'W' || message[*position] == 'w')
+      && (message[*position + 1] == 'H' || message[*position + 1] == 'h')
+      && (message[*position + 2] == 'I' || message[*position + 2] == 'i')
+      && (message[*position + 3] == 'T' || message[*position + 3] == 't')
+      && (message[*position + 4] == 'E' || message[*position + 4] == 'e'))
+  {
+    *rgb = WHITE;
+    (*position) += 5;
+    errorCode = 0;
+    return(errorCode);
+  }
+
+  if ((message[*position] == 'Y' || message[*position] == 'y')
+      && (message[*position + 1] == 'E' || message[*position + 1] == 'e')
+      && (message[*position + 2] == 'L' || message[*position + 2] == 'l')
+      && (message[*position + 3] == 'L' || message[*position + 3] == 'l')
+      && (message[*position + 4] == 'O' || message[*position + 4] == 'o')
+      && (message[*position + 5] == 'W' || message[*position + 5] == 'w'))
+  {
+    *rgb = YELLOW;
+    (*position) += 6;
     errorCode = 0;
     return(errorCode);
   }
