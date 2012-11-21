@@ -24,22 +24,16 @@ typedef struct command_s {
 }
   command_t;
 
-byte parseCommandAll(
-  char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode
-);
-
-byte parseCommandSet(
-  char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode
-);
-
-byte parseCommandHelp(
-  char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode
-);
+byte parseCommandAll(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandSet(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandSetplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandHelp(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 
 command_t commands[] = {
-  "all",  parseCommandAll,  executeNop,
-  "set",  parseCommandSet,  executeNop,
-  "help", parseCommandHelp, executeNop
+  "all",      parseCommandAll,      executeNop,
+  "set",      parseCommandSet,      executeNop,
+  "setplane", parseCommandSetplane, executeNop,
+  "help",     parseCommandHelp,     executeNop
 };
 
 byte commandCount = sizeof(commands) / sizeof(command_t);

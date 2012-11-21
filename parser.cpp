@@ -25,12 +25,13 @@ byte parseCommand(
 );
 
 byte parseRGB(char *message, byte length, byte *position, rgb_t *rgb);
-
 byte parsePosition(char *message, byte length, byte *position, byte *positionX, byte *positionY, byte *positionZ);
+byte parseOffset(char *message, byte length, byte *position, byte *offset);
+byte parseAxis(char *message, byte length, byte *position, byte *axis);
 
 byte checkForHexadecimal(char *message, byte length, byte *position, byte *digit);
-
-byte checkForPosition(char *message, byte length, byte *position, byte *digit);
+byte checkForOffset(char *message, byte length, byte *position, byte *digit);
+byte checkForAxis(char *message, byte length, byte *position, byte *digit);
 
 void skipToken(char *message, byte length, byte *position);
 void skipWhitespace(char *message, byte length, byte *position);
@@ -119,14 +120,35 @@ byte parseCommandSet(
   bytecode->executer = command->executer;
 
   skipWhitespace(message, length, position);
-
   errorCode = parsePosition(message, length, position, & positionX, & positionY, & positionZ);
-
   skipWhitespace(message, length, position);
-
   errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
 
   if (errorCode == 0) cubeSet( positionX, positionY, positionZ, bytecode->u.lit.colorFrom);
+
+  return(errorCode);
+};
+
+byte parseCommandSetplane(
+  char       *message,
+  byte        length,
+  byte       *position,
+  command_t  *command,
+  bytecode_t *bytecode) {
+
+  byte axis;
+  byte offset;
+  byte errorCode = 0;
+  bytecode->executer = command->executer;
+
+  skipWhitespace(message, length, position);
+  errorCode = parseAxis(message, length, position, & axis);
+  skipWhitespace(message, length, position);
+  errorCode = parseOffset(message, length, position, & offset);
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+
+  if (errorCode == 0) cubeSetplane( axis, offset, bytecode->u.lit.colorFrom);
 
   return(errorCode);
 };
@@ -150,7 +172,7 @@ byte parseCommandHelp(
     serial->println("move <axis> <position> <distance>;     (eg: 'move Z 3;', or 'move X -1;')                     (incomplete)");
     serial->println("shift <axis> <direction>;              (eg: 'shift X 1;', or 'shift Y -1;')                   (incomplete)");
     serial->println("copy <axis> <position> <distance>;     (eg: 'copy X 2 1;')                                    (incomplete)");
-    serial->println("setplane <axis> <position> <colour>;   (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 GREEN;')   (incomplete)");
+    serial->println("setplane <axis> <position> <colour>;   (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 GREEN;')");
     serial->println("  Please see www.freetronics.com/cube for more information");
   }
 
@@ -213,20 +235,54 @@ byte parsePosition(
   byte number;
   byte errorCode = 6;
 
-  if (checkForPosition(message, length, position, & digit)) {
+  if (checkForOffset(message, length, position, & digit)) {
     *positionX = digit;
     (*position) ++;
 
-    if (checkForPosition(message, length, position, & digit)) {
+    if (checkForOffset(message, length, position, & digit)) {
       *positionY = digit;
       (*position) ++;
 
-      if (checkForPosition(message, length, position, & digit)) {
+      if (checkForOffset(message, length, position, & digit)) {
         *positionZ = digit;
         (*position) ++;
         errorCode = 0;
       }
     }
+  }
+
+  return(errorCode);
+};
+
+byte parseAxis(
+  char  *message,
+  byte   length,
+  byte  *position,
+  byte  *axis) {
+
+  byte digit;
+  byte errorCode = 6;
+
+  if (checkForAxis(message, length, position, & digit)) {
+    *axis = digit;
+    (*position) ++;
+  }
+
+  return(errorCode);
+};
+
+byte parseOffset(
+  char  *message,
+  byte   length,
+  byte  *position,
+  byte  *offset) {
+
+  byte digit;
+  byte errorCode = 6;
+
+  if (checkForOffset(message, length, position, & digit)) {
+    *offset = digit;
+    (*position) ++;
   }
 
   return(errorCode);
@@ -260,7 +316,33 @@ byte checkForHexadecimal(
   return(match);
 }
 
-byte checkForPosition(
+byte checkForAxis(
+  char *message,
+  byte  length,
+  byte *position,
+  byte *digit) {
+
+  byte match = 0;
+
+  if (*position < length) {
+    if (message[*position] == 'X' || message[*position] == 'x') {
+      *digit = X;
+      match = 1;
+    }
+    if (message[*position] == 'Y' || message[*position] == 'y') {
+      *digit = Y;
+      match = 1;
+    }
+    if (message[*position] == 'Z' || message[*position] == 'z') {
+      *digit = Z;
+      match = 1;
+    }
+  }
+
+  return(match);
+}
+
+byte checkForOffset(
   char *message,
   byte  length,
   byte *position,
