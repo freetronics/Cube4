@@ -131,15 +131,15 @@ void cubeLine(
 
 void Cube::move(
   byte axis,
-  byte position,
+  byte offset,
   byte distance) {
 
-  cubeMove(axis, position, distance);
+  cubeMove(axis, offset, distance);
 }
 
 void cubeMove(
   byte axis,
-  byte position,
+  byte offset,
   byte distance) {
 
   //FIXME
@@ -161,15 +161,15 @@ void cubeShift(
 
 void Cube::copyplane(
   byte axis,
-  byte position,
+  byte offset,
   byte distance) {
 
-  cubeCopyplane(axis, position, distance);
+  cubeCopyplane(axis, offset, distance);
 }
 
 void cubeCopyplane(
   byte axis,
-  byte position,
+  byte offset,
   byte distance) {
 
   if( axis == X)
@@ -178,7 +178,7 @@ void cubeCopyplane(
     byte z = 0;
     for (byte z = 0;  z < CUBE_SIZE;  z++) {
       for (byte y = 0;  y < CUBE_SIZE;  y++) {
-        cubeSet(position + distance, y, z, RGB(led[position][y][z].color[COLOR_PLANE_RED], led[position][y][z].color[COLOR_PLANE_GREEN], led[position][y][z].color[COLOR_PLANE_BLUE]));
+        cubeSet(offset + distance, y, z, RGB(led[offset][y][z].color[COLOR_PLANE_RED], led[offset][y][z].color[COLOR_PLANE_GREEN], led[offset][y][z].color[COLOR_PLANE_BLUE]));
       }
     }
   }
@@ -188,7 +188,7 @@ void cubeCopyplane(
     byte z = 0;
     for (byte z = 0;  z < CUBE_SIZE;  z++) {
       for (byte x = 0;  x < CUBE_SIZE;  x++) {
-        cubeSet(x, position + distance, z, RGB(led[x][position][z].color[COLOR_PLANE_RED], led[x][position][z].color[COLOR_PLANE_GREEN], led[x][position][z].color[COLOR_PLANE_BLUE]));
+        cubeSet(x, offset + distance, z, RGB(led[x][offset][z].color[COLOR_PLANE_RED], led[x][offset][z].color[COLOR_PLANE_GREEN], led[x][offset][z].color[COLOR_PLANE_BLUE]));
       }
     }
   }
@@ -198,7 +198,7 @@ void cubeCopyplane(
     byte y = 0;
     for (byte y = 0;  y < CUBE_SIZE;  y++) {
       for (byte x = 0;  x < CUBE_SIZE;  x++) {
-        cubeSet(x, y, position + distance, RGB(led[x][y][position].color[COLOR_PLANE_RED], led[x][y][position].color[COLOR_PLANE_GREEN], led[x][y][position].color[COLOR_PLANE_BLUE]));
+        cubeSet(x, y, offset + distance, RGB(led[x][y][offset].color[COLOR_PLANE_RED], led[x][y][offset].color[COLOR_PLANE_GREEN], led[x][y][offset].color[COLOR_PLANE_BLUE]));
       }
     }
   }
@@ -206,15 +206,15 @@ void cubeCopyplane(
 
 void Cube::setplane(
   byte axis,
-  byte position,
+  byte offset,
   rgb_t rgb) {
 
-  cubeSetplane(axis, position, rgb);
+  cubeSetplane(axis, offset, rgb);
 }
 
 void cubeSetplane(
   byte axis,
-  byte position,
+  byte offset,
   rgb_t rgb) {
 
   if( axis == X)
@@ -223,7 +223,7 @@ void cubeSetplane(
     byte z = 0;
     for (byte z = 0;  z < CUBE_SIZE;  z++) {
       for (byte y = 0;  y < CUBE_SIZE;  y++) {
-        cubeSet(position, y, z, rgb);
+        cubeSet(offset, y, z, rgb);
       }
     }
   }
@@ -234,7 +234,7 @@ void cubeSetplane(
     byte z = 0;
     for (byte z = 0;  z < CUBE_SIZE;  z++) {
       for (byte x = 0;  x < CUBE_SIZE;  x++) {
-        cubeSet(x, position, z, rgb);
+        cubeSet(x, offset, z, rgb);
       }
     }
   }
@@ -245,7 +245,7 @@ void cubeSetplane(
     byte y = 0;
     for (byte y = 0;  y < CUBE_SIZE;  y++) {
       for (byte x = 0;  x < CUBE_SIZE;  x++) {
-        cubeSet(x, y, position, rgb);
+        cubeSet(x, y, offset, rgb);
       }
     }
   }
