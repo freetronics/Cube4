@@ -29,6 +29,7 @@ byte parseCommandSet(char *message, byte length, byte *position, command_t *comm
 byte parseCommandNext(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSetplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandCopyplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandMoveplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandHelp(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 
 command_t commands[] = {
@@ -37,6 +38,7 @@ command_t commands[] = {
   "next",      parseCommandNext,      executeNop,
   "setplane",  parseCommandSetplane,  executeNop,
   "copyplane", parseCommandCopyplane, executeNop,
+  "moveplane", parseCommandMoveplane, executeNop,
   "help",      parseCommandHelp,      executeNop
 };
 

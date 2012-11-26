@@ -205,6 +205,25 @@ void cubeCopyplane(
   }
 }
 
+void Cube::moveplane(
+  byte axis,
+  byte position,
+  byte destination,
+  rgb_t rgb) {
+
+  cubeMoveplane(axis, position, destination, rgb); 
+}
+
+void cubeMoveplane(
+  byte axis,
+  byte position,
+  byte destination,
+  rgb_t rgb) {
+
+  cubeCopyplane(axis, position, destination);
+  cubeSetplane(axis, position, rgb);
+}
+
 void Cube::setplane(
   byte axis,
   byte offset,
