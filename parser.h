@@ -25,6 +25,7 @@ typedef struct command_s {
   command_t;
 
 byte parseCommandAll(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandShift(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSet(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandNext(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSetplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
@@ -34,6 +35,7 @@ byte parseCommandHelp(char *message, byte length, byte *position, command_t *com
 
 command_t commands[] = {
   "all",       parseCommandAll,       executeNop,
+  "shift",     parseCommandShift,     executeNop,
   "set",       parseCommandSet,       executeNop,
   "next",      parseCommandNext,      executeNop,
   "setplane",  parseCommandSetplane,  executeNop,
@@ -56,7 +58,8 @@ static const char *errorCodes[] = {
   "Colour (rrggbb) expected",  // 7
   "Invalid seq command",       // 8
   "Sequence memory full",      // 9
-  "Axis designator expected"   // 10
+  "Axis designator expected",  // 10
+  "Expected '+' or '-'"        // 11
 };
  */
 #endif

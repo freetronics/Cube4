@@ -73,7 +73,6 @@ class Cube {
     void set(byte x, byte y, byte z, rgb_t rgb);
     void next(rgb_t rgb);
     void line(byte x1, byte y1, byte z1, byte x2, byte y2, byte z2, rgb_t rgb);
-    void move(byte axis, byte position, byte distance);
     void shift(byte axis, byte direction);
     void copyplane(byte axis, byte position, byte destination);
     void moveplane(byte axis, byte position, byte destination, rgb_t rgb);
@@ -91,7 +90,6 @@ extern void cubeFillPlaneZ(byte z, rgb_t rgb);
 extern void cubeSet( byte x, byte y, byte z, rgb_t rgb);
 extern void cubeNext(rgb_t rgb);
 extern void cubeLine(byte x1, byte y1, byte z1, byte x2, byte y2, byte z2, rgb_t rgb);
-extern void cubeMove(byte axis, byte position, byte distance);
 extern void cubeShift(byte axis, byte direction);
 extern void cubeCopyplane(byte axis, byte position, byte destination);
 extern void cubeMoveplane(byte axis, byte position, byte destination, rgb_t rgb_t);

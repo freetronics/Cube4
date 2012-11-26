@@ -129,22 +129,6 @@ void cubeLine(
   //FIXME
 }
 
-void Cube::move(
-  byte axis,
-  byte offset,
-  byte distance) {
-
-  cubeMove(axis, offset, distance);
-}
-
-void cubeMove(
-  byte axis,
-  byte offset,
-  byte distance) {
-
-  //FIXME
-}
-
 void Cube::shift(
   byte axis,
   byte direction) {
@@ -156,7 +140,20 @@ void cubeShift(
   byte axis,
   byte direction) {
 
-  //FIXME
+  if( direction == '+' )
+  {
+    for (byte i = CUBE_SIZE - 1; i > 0; i--) {
+      cubeCopyplane(axis, i - 1, i);
+    }
+    cubeSetplane(axis, 0, BLACK);
+  }
+  if( direction == '-' )
+  {
+    for (byte i = 0; i < CUBE_SIZE - 1; i++) {
+      cubeCopyplane(axis, i + 1, i);
+    }
+    cubeSetplane(axis, 3, BLACK);
+  }
 }
 
 void Cube::copyplane(
