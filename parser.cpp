@@ -156,7 +156,7 @@ byte parseCommandCopyplane(
 
   byte axis;
   byte offset;
-  byte distance;
+  byte destination;
   byte errorCode = 0;
   bytecode->executer = command->executer;
 
@@ -165,9 +165,9 @@ byte parseCommandCopyplane(
   skipWhitespace(message, length, position);
   errorCode = parseOffset(message, length, position, & offset);
   skipWhitespace(message, length, position);
-  errorCode = parseOffset(message, length, position, & distance);
+  errorCode = parseOffset(message, length, position, & destination);
 
-  if (errorCode == 0) cubeCopyplane(axis, offset, distance);
+  if (errorCode == 0) cubeCopyplane(axis, offset, destination);
 
   return(errorCode);
 };
@@ -214,7 +214,7 @@ byte parseCommandHelp(
     serial->println("setplane <axis> <offset> <colour>;          (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 00ff00;')");
     serial->println("copyplane <axis> <from offset> <to offset>; (eg: 'copyplane X 2 1;')");
     serial->println("  Supported colour aliases:");
-    serial->println("BLACK BLUE GREEN PURPLE RED WHITE YELLOW");
+    serial->println("BLACK BLUE GREEN ORANGE PURPLE RED WHITE YELLOW");
     //serial->println("line <location1> <location2> <colour>;      (eg: 'line 000 333 WHITE;', or 'line 000 333 ffffff;') INCOMPLETE");
     //serial->println("move <axis> <offset> <distance>;            (eg: 'move Z 3;', or 'move X -1;')                     INCOMPLETE");
     //serial->println("shift <axis> <direction>;                   (eg: 'shift X 1;', or 'shift Y -1;')                   INCOMPLETE");
@@ -266,6 +266,19 @@ byte parseRGB(
   {
     *rgb = GREEN;
     (*position) += 5;
+    errorCode = 0;
+    return(errorCode);
+  }
+
+  if ((message[*position] == 'O' || message[*position] == 'o')
+      && (message[*position + 1] == 'R' || message[*position + 1] == 'r')
+      && (message[*position + 2] == 'A' || message[*position + 2] == 'a')
+      && (message[*position + 3] == 'N' || message[*position + 3] == 'n')
+      && (message[*position + 4] == 'G' || message[*position + 4] == 'g')
+      && (message[*position + 5] == 'E' || message[*position + 5] == 'e'))
+  {
+    *rgb = ORANGE;
+    (*position) += 6;
     errorCode = 0;
     return(errorCode);
   }

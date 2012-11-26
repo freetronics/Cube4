@@ -9,7 +9,6 @@
  * ToDo
  * ~~~~
  * - Check all parameter bounds !
- *
  * - Implement pattern scripting over serial line.
  * - Color gamma correction map for each LED intensity in Flash memory.
  *   - See post #37 http://www.microchip.com/forums/m479196-p2.aspx
@@ -162,24 +161,25 @@ void cubeShift(
 
 void Cube::copyplane(
   byte axis,
-  byte offset,
-  byte distance) {
+  byte position,
+  byte destination) {
 
-  cubeCopyplane(axis, offset, distance);
+  cubeCopyplane(axis, position, destination);
 }
 
 void cubeCopyplane(
   byte axis,
-  byte offset,
-  byte distance) {
+  byte position,
+  byte destination) {
 
   if( axis == X)
   {
+
     byte y = 0;
     byte z = 0;
     for (byte z = 0;  z < CUBE_SIZE;  z++) {
       for (byte y = 0;  y < CUBE_SIZE;  y++) {
-        cubeSet(offset + distance, y, z, RGB(led[offset][y][z].color[COLOR_PLANE_RED], led[offset][y][z].color[COLOR_PLANE_GREEN], led[offset][y][z].color[COLOR_PLANE_BLUE]));
+        cubeSet(destination, y, z, RGB(led[position][y][z].color[COLOR_PLANE_RED], led[position][y][z].color[COLOR_PLANE_GREEN], led[position][y][z].color[COLOR_PLANE_BLUE]));
       }
     }
   }
@@ -189,7 +189,7 @@ void cubeCopyplane(
     byte z = 0;
     for (byte z = 0;  z < CUBE_SIZE;  z++) {
       for (byte x = 0;  x < CUBE_SIZE;  x++) {
-        cubeSet(x, offset + distance, z, RGB(led[x][offset][z].color[COLOR_PLANE_RED], led[x][offset][z].color[COLOR_PLANE_GREEN], led[x][offset][z].color[COLOR_PLANE_BLUE]));
+        cubeSet(x, destination, z, RGB(led[x][position][z].color[COLOR_PLANE_RED], led[x][position][z].color[COLOR_PLANE_GREEN], led[x][position][z].color[COLOR_PLANE_BLUE]));
       }
     }
   }
@@ -199,7 +199,7 @@ void cubeCopyplane(
     byte y = 0;
     for (byte y = 0;  y < CUBE_SIZE;  y++) {
       for (byte x = 0;  x < CUBE_SIZE;  x++) {
-        cubeSet(x, y, offset + distance, RGB(led[x][y][offset].color[COLOR_PLANE_RED], led[x][y][offset].color[COLOR_PLANE_GREEN], led[x][y][offset].color[COLOR_PLANE_BLUE]));
+        cubeSet(x, y, destination, RGB(led[x][y][position].color[COLOR_PLANE_RED], led[x][y][position].color[COLOR_PLANE_GREEN], led[x][y][position].color[COLOR_PLANE_BLUE]));
       }
     }
   }
