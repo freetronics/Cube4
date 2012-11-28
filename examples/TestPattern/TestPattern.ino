@@ -1,11 +1,10 @@
 /*
- * File:    CubeTest.ino
- * Version: 0.0
+ * File:    TestPattern.ino
+ * Version: 1.0
  * Author:  Jonathan Oxer (@jonoxer)
  * License: GPLv3
  */
 
-#include <SPI.h>
 #include "Cube.h"
 
 Cube cube;
