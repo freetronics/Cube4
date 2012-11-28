@@ -47,7 +47,7 @@ void rise()
         cube.set(xPos, yPos, zPos, RED);
         xPos++;
         i++;
-        delay(1);
+        delay(4);
       }
       yPos--;
     }
@@ -74,7 +74,7 @@ void fall()
       {
         cube.set(xPos, yPos, zPos, BLACK);
         yPos--;
-        delay(1);
+        delay(4);
       }
       xPos--;
     }
