@@ -11,6 +11,7 @@
  * accelerometer is the AM3X: www.freetronics.com/am3x
  */
 
+#include "SPI.h"
 #include "Cube.h"
 
 Cube cube;

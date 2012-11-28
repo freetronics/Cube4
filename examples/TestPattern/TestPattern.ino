@@ -5,6 +5,7 @@
  * License: GPLv3
  */
 
+#include "SPI.h"
 #include "Cube.h"
 
 Cube cube;
@@ -53,6 +54,11 @@ void loop(void) {
         break;
       case 6:
         cube.all(PINK);
+        delay(1000);
+        testState = 7;
+        break;
+      case 7:
+        cube.all(RGB(0x00, 0x44, 0xA));
         delay(1000);
         testState = 0;
         break;

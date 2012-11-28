@@ -5,6 +5,7 @@
  * License: GPLv3
  */
 
+#include "SPI.h"
 #include "Cube.h"
 
 Cube cube;

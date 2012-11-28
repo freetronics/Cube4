@@ -16,6 +16,7 @@
  * hit. There is no scoring, and no way to lose.
  */
 
+#include "SPI.h"
 #include "Cube.h"
 
 Cube cube;

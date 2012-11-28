@@ -12,6 +12,7 @@
  * is www.freetronics.com/sound
  */
 
+#include "SPI.h"
 #include "Cube.h"
 
 Cube cube;

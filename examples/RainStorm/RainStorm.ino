@@ -5,6 +5,7 @@
  * License: GPLv3
  */
 
+#include "SPI.h"
 #include "Cube.h"
 
 #define LIGHTNINGINTERVAL 40 // How many raindrops between random lightning strikes, on average
