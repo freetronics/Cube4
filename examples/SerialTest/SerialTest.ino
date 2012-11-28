@@ -15,7 +15,11 @@ void setup(void) {
   while (Serial == false) ;                 // Wait for Leonardo USB serial port
 #endif
 
-  cube.begin(0, 115200);                    // Port: Serial, Baudrate: 115200
+  // Serial port options for control of the Cube using serial commands are:
+  // 0: Control via the USB connector (most common).
+  // 1: Control via the RXD and TXD pins on the main board.
+  // -1: Don't attach any serial port to interact with the Cube.
+  cube.begin(0, 115200); // Start on serial port 0 (USB) at 115200 baud
 }
 
 void loop(void) {
