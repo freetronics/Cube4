@@ -60,7 +60,6 @@ static const byte Z = 2;
 class Cube {
   private:
     rgb_t currentColor;
-
     void fillPlaneZ(byte z, rgb_t rgb);
     void initializeTimer1(long period);
     void my9262WriteCommand(unsigned int command);
@@ -69,6 +68,7 @@ class Cube {
   public:
     Cube();
     void begin(byte serialPort = -1, long baudRate = 115200);
+    boolean hasReceivedSerialCommand();
     void all(rgb_t rgb);
     void set(byte x, byte y, byte z, rgb_t rgb);
     void next(rgb_t rgb);

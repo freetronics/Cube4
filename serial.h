@@ -26,5 +26,6 @@ static const byte SEMIC = 0x3b;  // Semicolon ';'
 
 char message[32];
 byte messageLength = 0;
+bool receivedSerialCommand = false;  // Set to true the first time the sketch receives a serial command
 
 #endif

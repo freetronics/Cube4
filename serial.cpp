@@ -60,13 +60,18 @@ void serialHandler(void) {
 
       if (readMessage()) {
 //      serial->println(message);
-
+        receivedSerialCommand = true;
         bytecode_t bytecode = {};
         byte errorCode = parser(message, messageLength, & bytecode);
         messageLength = 0;
       }
     }
   }
+}
+
+boolean Cube::hasReceivedSerialCommand()
+{
+  return receivedSerialCommand;
 }
 
 boolean readMessage() {
