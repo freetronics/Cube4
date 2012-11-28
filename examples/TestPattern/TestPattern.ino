@@ -1,7 +1,7 @@
 /*
  * File:    TestPattern.ino
  * Version: 1.0
- * Author:  Jonathan Oxer (@jonoxer)
+ * Author:  Jonathan Oxer (jon@freetronics.com)
  * License: GPLv3
  */
 
@@ -16,7 +16,11 @@ byte previousTestState = 0;
 /**
  */
 void setup(void) {
-  cube.begin(0, 38400);
+  // Serial port options for control of the Cube using serial commands are:
+  // 0: Control via the USB connector (most common).
+  // 1: Control via the RXD and TXD pins on the main board.
+  // -1: Don't attach any serial port to interact with the Cube.
+  cube.begin(0, 115200); // Start on serial port 0 (USB) at 115200 baud
 }
 
 /**
@@ -60,7 +64,10 @@ void loop(void) {
       case 7:
         cube.all(RGB(0x00, 0x44, 0xA));
         delay(1000);
-        testState = 0;
+        testState = 8;
+        break;
+      case 8:
+        randomPastel();
         break;
     }
   } else {
@@ -76,15 +83,12 @@ void loop(void) {
 
 void cycleCubeColours()
 {
-  for (byte i = 0; i < 2; i++)
-  {
-    cube.all(RED);
-    delay(1000);
-    cube.all(GREEN);
-    delay(1000);
-    cube.all(BLUE);
-    delay(1000);
-  }
+  cube.all(RED);
+  delay(1000);
+  cube.all(GREEN);
+  delay(1000);
+  cube.all(BLUE);
+  delay(1000);
 }
 
 void stepThroughLEDs()
@@ -106,7 +110,7 @@ void stepThroughLEDs()
         cube.set(xPos, yPos, zPos, WHITE);
         xPos++;
         i++;
-        delay(100);
+        delay(500);
       }
       yPos--;
     }
@@ -134,7 +138,6 @@ void fadeWhite()
 {
   for (byte i = 0; i < 255; i++)
   {
-    cube.all(BLACK);
     cube.all(RGB(i, i, i));
     delay(3);
   }
@@ -143,4 +146,10 @@ void fadeWhite()
     cube.all(RGB(i, i, i));
     delay(3);
   }
+}
+
+void randomPastel()
+{  
+  cube.set(random(4), random(4), random(4), RGB(random(255), random(255), random(255)));
+  delay(2);
 }
