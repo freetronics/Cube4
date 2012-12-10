@@ -52,21 +52,6 @@ void loop(void) {
         testState = 5;
         break;
       case 5:
-        cube.all(ORANGE);
-        delay(1000);
-        testState = 6;
-        break;
-      case 6:
-        cube.all(PINK);
-        delay(1000);
-        testState = 7;
-        break;
-      case 7:
-        cube.all(RGB(0x00, 0x44, 0xA));
-        delay(1000);
-        testState = 8;
-        break;
-      case 8:
         randomPastel();
         break;
     }
@@ -88,6 +73,12 @@ void cycleCubeColours()
   cube.all(GREEN);
   delay(1000);
   cube.all(BLUE);
+  delay(1000);
+  cube.all(ORANGE);
+  delay(1000);
+  cube.all(PINK);
+  delay(1000);
+  cube.all(RGB(0x00, 0x44, 0xA));
   delay(1000);
 }
 
