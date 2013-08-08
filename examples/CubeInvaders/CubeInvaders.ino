@@ -12,6 +12,18 @@
  * White wire: GND
  * Red wire: +5V
  *
+ * It also requires the "WiiChuck" library to be installed:
+ * - Inside your 'libraries' folder in your Arduino sketchbook folder
+ *   (Documents\Arduino on many computers), create a directory called 'WiiChuck'
+ * - Visit http://playground.arduino.cc//Main/WiiChuckClass and click "Get Code"
+ *   next to the second code block, the one under the heading "Library updated
+ *   to compile on Arduino 1.0"
+ * - When that page opens showing just the raw source code, "Save As" with the
+ *   name WiiChuck.h in the WiiChuck directory you just created.
+ * - Close and reopen the Arduino IDE before recompiling this sketch.
+ *
+ *
+ *
  * Joystick moves the player. Z button fires. The cube flashes green with a successful
  * hit. There is no scoring, and no way to lose.
  */
