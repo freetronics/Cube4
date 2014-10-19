@@ -77,6 +77,14 @@ class Cube {
     void copyplane(byte axis, byte position, byte destination);
     void moveplane(byte axis, byte position, byte destination, rgb_t rgb);
     void setplane(byte axis, byte position, rgb_t rgb);
+
+    /* Suspend and resume Cube LED output updates
+       (note that suspending LED updates for any significant
+       amount of time will result in cube flickering/uneven LED
+       brightness).
+     */
+    void suspend();
+    void resume();
 };
 
 //extern long cubeTimer1Period;

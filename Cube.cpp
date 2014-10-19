@@ -17,6 +17,8 @@
 
 #include "Cube.h"
 
+static volatile bool suspended = false;
+
 byte currentColor  = COLOR_PLANE_RED;
 byte currentPlaneZ = 0;
 
@@ -29,6 +31,8 @@ void loadColorPlaneZ(byte color, byte planeZ);
 
 ISR(TIMER1_OVF_vect) {                            // 116 microseconds
 //digitalWrite(7, digitalRead(7) ^ 1);            // Diagnosis via oscilloscope
+  if(suspended)
+    return;
 
   if (++ currentColor > COLOR_PLANE_BLUE) {
     currentColor  = COLOR_PLANE_RED;
@@ -194,4 +198,15 @@ void loadColorPlaneZ(
   if(spe_set)
     SPCR |= (1 << SPE);
 }
+
+void Cube::suspend()
+{
+  suspended = true;
+}
+
+void Cube::resume()
+{
+  suspended = false;
+}
+
 #endif
