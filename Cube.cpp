@@ -135,6 +135,8 @@ void loadColorPlaneZ(
   byte color,
   byte planeZ) {
 
+  bool spe_set = (SPCR & (1 << SPE)); // Record the current SPI enable state
+
   SPCR  = ((1 << SPE) | (1 << MSTR));  // TODO: Set MSTR in initializeTimer1()
   SPSR |= (1 << SPI2X);                // TODO: Move to initializeTimer1()
 
@@ -148,7 +150,7 @@ void loadColorPlaneZ(
     PORTD &= ~(1 << 6);    // digitalWrite(PIN_LED_LAT, LOW);
   }
 
-  SPCR &= ~(1 << SPE);     // SPI.end();
+  SPCR &= ~(1 << SPE);     // SPI.end(), disable SPI so we can bit-bang MOSI
 
   byte value = led[3][3][planeZ].color[color];
 
@@ -187,5 +189,9 @@ void loadColorPlaneZ(
 
 // Enable 74154
   PORTE &= ~(1 << 6);      // digitalWrite(PIN_LED_EN, LOW);
+
+  // Re-enable SPI hardware if it was enabled
+  if(spe_set)
+    SPCR |= (1 << SPE);
 }
 #endif
