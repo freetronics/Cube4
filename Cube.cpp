@@ -12,9 +12,6 @@
  * - Test current gain control.
  */
 
-#ifndef CUBE_cpp
-#define CUBE_cpp
-
 #include "Cube.h"
 
 static volatile bool suspended = false;
@@ -208,5 +205,3 @@ void Cube::resume()
 {
   suspended = false;
 }
-
-#endif
