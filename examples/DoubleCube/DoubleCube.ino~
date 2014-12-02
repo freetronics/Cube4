@@ -1,0 +1,78 @@
+/*
+ * File:    double square
+ * Version: 1.0
+ * Author:  ADA
+ 
+ */
+
+#include "SPI.h"
+#include "Cube.h"
+ 
+word timer=800;
+byte rr;
+byte gg;
+byte bb;
+
+ 
+Cube cube;
+
+void setup(void) {
+   cube.begin(0, 115200); // Start on serial port 0 (USB) at 115200 baud
+}
+
+void loop(void) {
+
+    rr = random(0, 2) * 255;
+    gg = random(0, 2) * 255;
+    bb = random(0, 2) * 255;
+   
+   
+   cube.setplane(X,0,RGB(rr, gg, bb));
+   cube.setplane(X,3,RGB(rr, gg, bb));
+   cube.setplane(Y,0,RGB(rr, gg, bb));
+   cube.setplane(Y,3,RGB(rr, gg, bb));
+   cube.setplane(Z,0,RGB(rr, gg, bb));
+   cube.setplane(Z,3,RGB(rr, gg, bb));
+   
+   rr = random(0, 2) * 255;
+   gg = random(0, 2) * 255;
+   bb = random(0, 2) * 255;
+   
+   cube.set( 1,1,1,RGB(rr, gg, bb));
+   cube.set( 2,1,1,RGB(rr, gg, bb));
+   cube.set( 1,2,1,RGB(rr, gg, bb));
+   cube.set( 2,2,1,RGB(rr, gg, bb));
+   cube.set( 1,1,2,RGB(rr, gg, bb));
+   cube.set( 2,1,2,RGB(rr, gg, bb));
+   cube.set( 1,2,2,RGB(rr, gg, bb));
+   cube.set( 2,2,2,RGB(rr, gg, bb));
+   delay(timer);
+ 
+  rr = random(0, 2) * 255;
+  gg = random(0, 2) * 255;
+  bb = random(0, 2) * 255;
+     
+   
+   cube.setplane(X,0,RGB(rr, gg, bb));
+   cube.setplane(X,3,RGB(rr, gg, bb));
+   cube.setplane(Y,0,RGB(rr, gg, bb));
+   cube.setplane(Y,3,RGB(rr, gg, bb));
+   cube.setplane(Z,0,RGB(rr, gg, bb));
+   cube.setplane(Z,3,RGB(rr, gg, bb));
+ 
+rr = random(0, 2) * 255;
+gg = random(0, 2) * 255;
+bb = random(0, 2) * 255;
+     
+   
+   cube.set( 1,1,1,RGB(rr, gg, bb));
+   cube.set( 2,1,1,RGB(rr, gg, bb));
+   cube.set( 1,2,1,RGB(rr, gg, bb));
+   cube.set( 2,2,1,RGB(rr, gg, bb));
+   cube.set( 1,1,2,RGB(rr, gg, bb));
+   cube.set( 2,1,2,RGB(rr, gg, bb));
+   cube.set( 1,2,2,RGB(rr, gg, bb));
+   cube.set( 2,2,2,RGB(rr, gg, bb));
+   delay(timer);
+ 
+}

@@ -1,0 +1,46 @@
+    /*
+     * File:    cube smooth colour fader
+     * Version: 1.0
+     * Author:  ADA/THOMAS
+     
+     */
+
+    #include "SPI.h"
+    #include "Cube.h"
+    int timer=10;
+    int rr=0;
+    int gg=0;
+    int bb=255;
+
+    Cube cube;
+
+    void setup(void) {
+       cube.begin(0, 115200); // Start on serial port 0 (USB) at 115200 baud
+    }
+
+    void loop(void) {
+
+         
+          while (rr<255){
+          rr=rr+1;
+          bb=bb-1;
+          cube.all(RGB(rr, gg, bb));
+          delay(timer);
+          }
+           
+          while (gg<255){
+          gg=gg+1;
+          rr=rr-1;
+          cube.all(RGB(rr, gg, bb));
+          delay(timer);
+          }
+           
+          while (bb<255){
+          bb=bb+1;
+          gg=gg-1;
+          cube.all(RGB(rr, gg, bb));
+          delay(timer);
+          }
+             
+             
+    }
