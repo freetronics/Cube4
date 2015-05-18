@@ -206,10 +206,18 @@ byte parseCommandBox(
   errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
   skipWhitespace(message, length, position);
   errorCode = parseOffset(message, length, position, & style);
+  if (errorCode) {
+    errorCode = 0;
+    style = 0;
+  }
   skipWhitespace(message, length, position);
-  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorTo);
+  if (errorCode) {
+    errorCode = 0;
+    bytecode->u.lit.colorTo = BLACK;
+  }
 
-  if (errorCode == 0) cubeBox( positionX1, positionY1, positionZ1, positionX2, positionY2, positionZ2, bytecode->u.lit.colorFrom, style, bytecode->u.lit.colorFrom);
+  if (errorCode == 0) cubeBox( positionX1, positionY1, positionZ1, positionX2, positionY2, positionZ2, bytecode->u.lit.colorFrom, style, bytecode->u.lit.colorTo);
 
   return(errorCode);
 };
@@ -235,9 +243,13 @@ byte parseCommandSphere(
   skipWhitespace(message, length, position);
   errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
   skipWhitespace(message, length, position);
-  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorTo);
+  if (errorCode) {
+    errorCode = 0;
+    bytecode->u.lit.colorTo = BLACK;
+  }
 
-  if (errorCode == 0) cubeSphere( positionX1, positionY1, positionZ1, size, bytecode->u.lit.colorFrom, bytecode->u.lit.colorFrom);
+  if (errorCode == 0) cubeSphere( positionX1, positionY1, positionZ1, size, bytecode->u.lit.colorFrom, bytecode->u.lit.colorTo);
 
   return(errorCode);
 };
