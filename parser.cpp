@@ -153,6 +153,95 @@ byte parseCommandSet(
   return(errorCode);
 };
 
+byte parseCommandLine(
+  char       *message,
+  byte        length,
+  byte       *position,
+  command_t  *command,
+  bytecode_t *bytecode) {
+
+  byte positionX1;
+  byte positionY1;
+  byte positionZ1;
+  byte positionX2;
+  byte positionY2;
+  byte positionZ2;
+  byte errorCode = 0;
+  bytecode->executer = command->executer;
+
+  skipWhitespace(message, length, position);
+  errorCode = parsePosition(message, length, position, & positionX1, & positionY1, & positionZ1);
+  skipWhitespace(message, length, position);
+  errorCode = parsePosition(message, length, position, & positionX2, & positionY2, & positionZ2);
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+
+  if (errorCode == 0) cubeLine( positionX1, positionY1, positionZ1, positionX2, positionY2, positionZ2, bytecode->u.lit.colorFrom);
+
+  return(errorCode);
+};
+
+byte parseCommandBox(
+  char       *message,
+  byte        length,
+  byte       *position,
+  command_t  *command,
+  bytecode_t *bytecode) {
+
+  byte positionX1;
+  byte positionY1;
+  byte positionZ1;
+  byte positionX2;
+  byte positionY2;
+  byte positionZ2;
+  byte style = 0;
+  byte errorCode = 0;
+  bytecode->executer = command->executer;
+
+  skipWhitespace(message, length, position);
+  errorCode = parsePosition(message, length, position, & positionX1, & positionY1, & positionZ1);
+  skipWhitespace(message, length, position);
+  errorCode = parsePosition(message, length, position, & positionX2, & positionY2, & positionZ2);
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+  skipWhitespace(message, length, position);
+  errorCode = parseOffset(message, length, position, & style);
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+
+  if (errorCode == 0) cubeBox( positionX1, positionY1, positionZ1, positionX2, positionY2, positionZ2, bytecode->u.lit.colorFrom, style, bytecode->u.lit.colorFrom);
+
+  return(errorCode);
+};
+
+byte parseCommandSphere(
+  char       *message,
+  byte        length,
+  byte       *position,
+  command_t  *command,
+  bytecode_t *bytecode) {
+
+  byte positionX1;
+  byte positionY1;
+  byte positionZ1;
+  byte size;
+  byte errorCode = 0;
+  bytecode->executer = command->executer;
+
+  skipWhitespace(message, length, position);
+  errorCode = parsePosition(message, length, position, & positionX1, & positionY1, & positionZ1);
+  skipWhitespace(message, length, position);
+  errorCode = parseOffset(message, length, position, & size);
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+  skipWhitespace(message, length, position);
+  errorCode = parseRGB(message, length, position, & bytecode->u.lit.colorFrom);
+
+  if (errorCode == 0) cubeSphere( positionX1, positionY1, positionZ1, size, bytecode->u.lit.colorFrom, bytecode->u.lit.colorFrom);
+
+  return(errorCode);
+};
+
 byte parseCommandNext(
   char       *message,
   byte        length,
@@ -270,8 +359,11 @@ byte parseCommandHelp(
     serial->println("  setplane <axis> <offset> <colour>;                   (eg: 'setplane X 2 BLUE;', or 'setplane Y 1 00ff00;')");
     serial->println("  copyplane <axis> <from offset> <to offset>;          (eg: 'copyplane X 2 1;')");
     serial->println("  moveplane <axis> <from offset> <to offset> <colour>; (eg: 'move Z 1 3 BLACK;', or 'move X 3 0 GREEN;')");
-    //serial->println("  Graphics and shapes:");
-    //serial->println("line <location1> <location2> <colour>;      (eg: 'line 000 333 WHITE;', or 'line 000 333 ffffff;') INCOMPLETE");
+    // Commented out due to taking up an additional 18% memory
+    // serial->println("Graphics and shapes:");
+    // serial->println("  line <location1> <location2> <colour>;                     (eg: 'line 000 333 RED;', or 'line 000 333 ff0000;')");
+    // serial->println("  box <location1> <location2> <colour> (<style:0-4:solid/walls only/edges only/walls filled/edges filled>) (<fill>);  (eg: 'box 000 333 GREEN;', or 'box 000 333 00ff00 3 ffffff;')");
+    // serial->println("  sphere <location1> <location2> <colour> (<fill>);          (eg: 'sphere 000 333 BLUE;', or 'sphere 000 333 0000ff ffffff;')");
     serial->println("Supported colour aliases:");
     serial->println("  BLACK BLUE GREEN ORANGE PINK PURPLE RED WHITE YELLOW");
     serial->println("  *** Please see www.freetronics.com/cube for more information ***");

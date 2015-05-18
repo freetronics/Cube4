@@ -23,6 +23,10 @@ API implementation spec:
 	  cube.setplane( axis, position, colour );       // "setplane <axis> <position> <colour>"
 	  cube.moveplane( axis, from position, to position, colour ); // "move <axis> <from position> <to position> <colour>" ('to position' could be "h", for hidden
 	  cube.copyplane( axis, from position, to position );    // "copy <axis> <from position> <to position>"
+	  // Graphics / shapes:
+	  cube.line( x1, y1, z1, x2, y2, z2, colour );   // "line <location1> <location2> <colour>"
+	  cube.sphere( centre location, size, colour outside, colour centre );    // "sphere <location1> <location2> <colour> (<fill>)"
+	  cube.box( start location, end location, colour, style:solid/walls only/edges only/walls filled/edges filled, filled colour    // "box <location1> <location2> <colour> (<style:0-4:solid/walls only/edges only/walls filled/edges filled>) (<fill>)"
 	}
 
 	// location: 0, 1, 2, 3, h/H  (where H is a special hidden plane)
@@ -47,7 +51,4 @@ API implementation spec:
 	//       a0...a5 returns '0' to '1023' as an ascii number for the most recent ADC pin read
 	//                                     (the cube reads them all to a live array in its loop)
 	// Graphics / shapes:
-	// cube.line( x1, y1, z1, x2, y2, z2, colour );   // "line <location1> <location2> <colour>"
 	// cube.bar( start location, height, colourstart, colourend, colouroff
-	// cube.sphere( centre location, size, colourcentre, colour outside
-	// cube.box( startlocation, endlocation, style:edges only/solidwalls/solidfilled, colour, filledcolour
