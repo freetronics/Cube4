@@ -3,6 +3,9 @@ hasReceivedSerialCommand	KEYWORD2
 all	KEYWORD2
 set	KEYWORD2
 next	KEYWORD2
+line	KEYWORD2
+box	KEYWORD2
+sphere	KEYWORD2
 shift	KEYWORD2
 copyplane	KEYWORD2
 moveplane	KEYWORD2

@@ -28,6 +28,9 @@ byte parseCommandAll(char *message, byte length, byte *position, command_t *comm
 byte parseCommandShift(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSet(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandNext(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandLine(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandBox(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
+byte parseCommandSphere(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandSetplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandCopyplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
 byte parseCommandMoveplane(char *message, byte length, byte *position, command_t *command, bytecode_t *bytecode);
@@ -38,6 +41,9 @@ command_t commands[] = {
   "shift",     parseCommandShift,     executeNop,
   "set",       parseCommandSet,       executeNop,
   "next",      parseCommandNext,      executeNop,
+  "line",      parseCommandLine,      executeNop,
+  "box",       parseCommandBox,      executeNop,
+  "sphere",    parseCommandSphere,    executeNop,
   "setplane",  parseCommandSetplane,  executeNop,
   "copyplane", parseCommandCopyplane, executeNop,
   "moveplane", parseCommandMoveplane, executeNop,
