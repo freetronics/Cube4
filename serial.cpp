@@ -35,10 +35,11 @@ void Cube::serialBegin(
       serial = & Serial;
       break;
 
-    case 1:
+/*    case 1:
       Serial1.begin(baudRate);
       serial = & Serial1;
       break;
+      */    // mjh
   }
 
   if (serial) {
