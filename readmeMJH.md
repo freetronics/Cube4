@@ -15,4 +15,6 @@ this file will be updated as I progress and recover the data from experience.
 
 6. There are still several warnings at compile time with the Cube code. I will attempt to fix them.
 
+7. be aware that if you repeat the compilation then with some environment settings the warnings will 'go away' and it will appear clean...
+
 
