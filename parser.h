@@ -42,7 +42,7 @@ command_t commands[] = {
   "set",       parseCommandSet,       executeNop,
   "next",      parseCommandNext,      executeNop,
   "line",      parseCommandLine,      executeNop,
-  "box",       parseCommandBox,      executeNop,
+  "box",       parseCommandBox,       executeNop,
   "sphere",    parseCommandSphere,    executeNop,
   "setplane",  parseCommandSetplane,  executeNop,
   "copyplane", parseCommandCopyplane, executeNop,
