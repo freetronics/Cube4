@@ -9,7 +9,7 @@
 #define COLOR_h
 
 typedef struct {
-  byte color[3];
+  int color[3];
 }
   rgb_t;
 

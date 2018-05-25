@@ -15,7 +15,7 @@ static const byte RBRAC = 0x29;  // Right bracket ')'
 typedef struct command_s {
   char  *name;
   byte (*parser) (
-         char             *message,
+         const char             *message,
          byte              length,
          byte             *position,
          struct command_s *command,
@@ -42,7 +42,7 @@ command_t commands[] = {
   "set",       parseCommandSet,       executeNop,
   "next",      parseCommandNext,      executeNop,
   "line",      parseCommandLine,      executeNop,
-  "box",       parseCommandBox,      executeNop,
+  "box",       parseCommandBox,       executeNop,
   "sphere",    parseCommandSphere,    executeNop,
   "setplane",  parseCommandSetplane,  executeNop,
   "copyplane", parseCommandCopyplane, executeNop,

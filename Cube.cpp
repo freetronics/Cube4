@@ -180,7 +180,7 @@ void loadColorPlaneZ(
   }
 
                            // Disable 7154, MY9262 latch complete
-  PORTE |=  (1 << 6);      // digitalWrite(PIN_LED_EN, HIGH);
+//  PORTE |=  (1 << 6);      // digitalWrite(PIN_LED_EN, HIGH);          // mjh
   PORTD &= ~(1 << 6);      // digitalWrite(PIN_LED_LAT, LOW);
 
   byte colorPlaneZSelect = color + (planeZ * 3);
@@ -189,7 +189,7 @@ void loadColorPlaneZ(
   PORTB |= (colorPlaneZSelect << 4);
 
 // Enable 74154
-  PORTE &= ~(1 << 6);      // digitalWrite(PIN_LED_EN, LOW);
+//  PORTE &= ~(1 << 6);      // digitalWrite(PIN_LED_EN, LOW);
 
   // Re-enable SPI hardware if it was enabled
   if(spe_set)
