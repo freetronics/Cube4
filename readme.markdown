@@ -2,7 +2,7 @@ Cube
 ====
 
 API implementation spec:
-
+```C
 	#include "Cube.h"
 
 	CUBE cube();
@@ -52,3 +52,4 @@ API implementation spec:
 	//                                     (the cube reads them all to a live array in its loop)
 	// Graphics / shapes:
 	// cube.bar( start location, height, colourstart, colourend, colouroff
+```
